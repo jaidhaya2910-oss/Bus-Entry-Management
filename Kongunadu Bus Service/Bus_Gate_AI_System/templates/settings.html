@@ -1,0 +1,56 @@
+{% extends 'base.html' %}{% block content %}
+<div class="page-head">
+  <div><p class="eyebrow">Control Panel</p><h1>Admin Settings</h1></div>
+  <span class="status-pill">Secure Access</span>
+</div>
+<div class="settings-grid">
+  <form method="post" class="form-card">
+    <input type="hidden" name="form_type" value="system">
+    <h2>System & Email Settings</h2>
+    <label>College Name</label>
+    <input name="college_name" value="{{settings.college_name}}">
+
+    <label>Default Report Email</label>
+    <input name="report_email" value="{{settings.report_email}}">
+
+    <h2>Email SMTP Settings</h2>
+    <label>SMTP Host</label>
+    <input name="smtp_host" value="{{settings.smtp_host or 'smtp.gmail.com'}}">
+
+    <label>SMTP Port</label>
+    <input name="smtp_port" value="{{settings.smtp_port or '587'}}">
+
+    <label>Sender Gmail ID</label>
+    <input name="smtp_email" value="{{settings.smtp_email}}" placeholder="yourmail@gmail.com">
+
+    <label>Gmail App Password</label>
+    <input name="smtp_password" value="{{settings.smtp_password}}" placeholder="16-character app password, not normal Gmail password">
+    <p class="hint">For Gmail, enable 2-Step Verification and create an App Password. SMTP Host: smtp.gmail.com, Port: 587.</p>
+
+    <button>Save Settings</button>
+  </form>
+
+  <form method="post" class="form-card credential-card">
+    <input type="hidden" name="form_type" value="credentials">
+    <h2>Change Login ID & Password</h2>
+    <p class="hint">Update the username and password used for admin login.</p>
+
+    <label>Admin Name</label>
+    <input name="admin_name" value="{{admin.name}}" required>
+
+    <label>Login ID / Username</label>
+    <input name="username" value="{{admin.username}}" required>
+
+    <label>Current Password</label>
+    <input name="current_password" type="password" placeholder="Enter current password" required>
+
+    <label>New Password</label>
+    <input name="new_password" type="password" placeholder="Leave blank to keep old password">
+
+    <label>Confirm New Password</label>
+    <input name="confirm_password" type="password" placeholder="Re-enter new password">
+
+    <button>Update Login Details</button>
+  </form>
+</div>
+{% endblock %}

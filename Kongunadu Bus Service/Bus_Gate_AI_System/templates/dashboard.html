@@ -1,0 +1,39 @@
+{% extends 'base.html' %}{% block content %}
+<section class="page-head">
+  <div><p class="eyebrow">Overview</p><h1>Dashboard</h1></div>
+</section>
+<div class="cards">
+  <div class="card stat"><span>Total Buses</span><b>{{stats.total_buses}}</b><em>registered</em></div>
+  <div class="card stat"><span>Today Entries</span><b>{{stats.today_entries}}</b><em>logged today</em></div>
+  <div class="card stat reentry-soft"><span>Re-Entry Today</span><b>{{stats.reentry_today}}</b><em>second or repeated entries</em></div>
+  <div class="card stat danger-soft"><span>Late Today</span><b>{{stats.late_today}}</b><em>delayed buses</em></div>
+  <div class="card stat warn-soft"><span>Unknown</span><b>{{stats.unknown_today}}</b><em>unmatched plates</em></div>
+  <div class="card stat"><span>Avg Delay</span><b>{{stats.avg_delay}} min</b><em>today</em></div>
+</div>
+<div class="panel">
+  <div class="section-title"><h2>Live Entry Update</h2><p>Second-time same-day entries are highlighted as RE-ENTRY</p></div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Bus No</th><th>Bus Name</th><th>Route</th><th>Schedule</th><th>Entry</th><th>Status</th><th>Entry Type</th><th>Late</th></tr>
+      {% for e in latest %}
+      <tr class="{% if e.duplicate_count and e.duplicate_count > 1 %}reentry-row{% endif %}">
+        <td><b>{{e.bus_number}}</b></td>
+        <td>{{e.bus_name or "-"}}</td>
+        <td>{{e.route_name}}</td>
+        <td>{{e.scheduled_entry_time}}</td>
+        <td>{{e.actual_entry_time}}</td>
+        <td><span class="badge {{e.entry_status|replace(' ','') }}">{{e.entry_status}}</span></td>
+        <td>
+          {% if e.duplicate_count and e.duplicate_count > 1 %}
+            <span class="badge REENTRY">RE-ENTRY #{{e.duplicate_count}}</span>
+          {% else %}
+            <span class="badge FIRSTENTRY">FIRST ENTRY</span>
+          {% endif %}
+        </td>
+        <td>{{e.late_minutes}} min</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

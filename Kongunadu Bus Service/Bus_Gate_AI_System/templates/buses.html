@@ -1,0 +1,43 @@
+{% extends 'base.html' %}{% block content %}
+<div class="page-head">
+  <div><p class="eyebrow">Master Data</p><h1>Bus Master</h1></div>
+  <span class="status-pill">Manage Buses</span>
+</div>
+<form class="grid form-elevated" method="post" action="/buses/add">
+  <input name="bus_number" placeholder="Bus Number" required>
+  <input name="bus_name" placeholder="Bus Name">
+  <input name="driver_name" placeholder="Driver Name">
+  <input name="driver_mobile" placeholder="Driver Mobile">
+  <input name="route_name" placeholder="Route Name">
+  <input name="entry_time" type="time" required>
+  <button>Add Bus</button>
+</form>
+<form class="search">
+  <input name="q" value="{{q}}" placeholder="Search bus, driver, or route">
+  <button>Search</button>
+</form>
+<div class="panel">
+  <div class="section-title"><h2>Registered Buses</h2><p>Use Edit to update any bus details</p></div>
+  <div class="table-wrap">
+    <table>
+      <tr><th>Bus No</th><th>Name</th><th>Driver</th><th>Mobile</th><th>Route</th><th>Entry</th><th>Action</th></tr>
+      {% for b in buses %}
+      <tr>
+        <form method="post" action="/buses/edit/{{b.id}}">
+          <td><input class="table-input strong-input" name="bus_number" value="{{b.bus_number}}" required></td>
+          <td><input class="table-input" name="bus_name" value="{{b.bus_name or ''}}"></td>
+          <td><input class="table-input" name="driver_name" value="{{b.driver_name or ''}}"></td>
+          <td><input class="table-input" name="driver_mobile" value="{{b.driver_mobile or ''}}"></td>
+          <td><input class="table-input" name="route_name" value="{{b.route_name or ''}}"></td>
+          <td><input class="table-input" name="entry_time" type="time" value="{{b.entry_time or ''}}" required></td>
+          <td class="action-cell">
+            <button class="small-btn" type="submit">Edit</button>
+            <a class="delete-link" onclick="return confirm('Delete this bus?')" href="/buses/delete/{{b.id}}">Delete</a>
+          </td>
+        </form>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endblock %}

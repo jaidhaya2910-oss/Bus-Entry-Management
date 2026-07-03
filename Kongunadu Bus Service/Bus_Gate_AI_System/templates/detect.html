@@ -1,0 +1,27 @@
+{% extends 'base.html' %}{% block content %}
+<section class="page-head">
+  <div><p class="eyebrow">AI Detection</p><h1>Upload Bus Image</h1></div>
+</section>
+<form method="post" enctype="multipart/form-data" class="upload-card">
+  <div class="upload-icon">📷</div>
+  <div>
+    <h2>Detect Bus Number</h2>
+    <p>Upload a clear bus number plate image. The system will detect and add the entry automatically.</p>
+    <input type="file" name="image" accept="image/*" required>
+  </div>
+  <button type="submit">Auto Detect & Add Entry</button>
+</form>
+{% if result %}
+<div class="result {% if result.type!='found' %}danger{% else %}success{% endif %}">
+  {% if result.type=='not_detected' %}
+    <h2>Bus Number Not Detected</h2><p>Please upload a clear number plate image.</p><p><b>OCR Text:</b> {{result.ocr_text}}</p>
+  {% elif result.type=='unknown' %}
+    <h2>Unknown Bus Detected</h2><p><b>{{result.bus_number}}</b></p><p><b>OCR Text:</b> {{result.ocr_text}}</p>
+  {% elif result.type=='ocr_error' or result.type=='error' or result.type=='server_error' %}
+    <h2>Error</h2><p>{{result.message}}</p>
+  {% else %}
+    <h2>Entry Added Successfully</h2><p><b>{{result.bus.bus_number}}</b> - {{result.bus.bus_name or "-"}} - {{result.bus.route_name}}</p><p>Entry Time: {{result.actual}}</p><p>Status: {{result.status}} | Late: {{result.late}} min</p><p><b>OCR Text:</b> {{result.ocr_text}}</p>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% block content %}<h1>User Management</h1><table><tr><th>Username</th><th>Name</th><th>Role</th><th>Created</th></tr>{% for a in admins %}<tr><td>{{a.username}}</td><td>{{a.name}}</td><td>{{a.role}}</td><td>{{a.created_at}}</td></tr>{% endfor %}</table>{% endblock %}

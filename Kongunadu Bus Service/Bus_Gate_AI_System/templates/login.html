@@ -1,0 +1,25 @@
+{% extends 'base.html' %}{% block content %}
+<div class="login-page">
+  <div class="login-hero">
+    <div class="big-icon">
+    <img src="{{ url_for('static', filename='images/kongu logo.png') }}" alt="Logo">
+</div>
+    <p class="eyebrow hero-tag">Kongunadu Institution</p>
+    <h1>KNCET Bus Entry System</h1>
+    <p>One Team. One Vision. One Success.</p>
+    <div class="hero-stats">
+      <span>OCR Detection</span><span>Daily Reports</span><span>Secure Admin</span>
+    </div>
+  </div>
+  <div class="login-box glass">
+    <h1>Admin Login</h1>
+    <p class="subtext">Sign in to open the dashboard</p>
+    <form method="post">
+      <input name="username" placeholder="Login ID" required>
+      <input name="password" type="password" placeholder="Password" required>
+      <button>Login</button>
+    </form>
+    <p class="hint">Login details can be changed from Admin Settings after sign in.</p>
+  </div>
+</div>
+{% endblock %}
